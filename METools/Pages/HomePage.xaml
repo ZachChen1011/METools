@@ -1,0 +1,125 @@
+﻿<Page x:Class="METools.Pages.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:METools.Pages"
+      xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
+      xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Style="{StaticResource {x:Type Page}}"
+      Title="HomePage">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="SortUserDB" Source="{Binding UserDB}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="UserID" Direction="Descending"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </Page.Resources>
+    
+    <Border CornerRadius="5" Background="{DynamicResource SecundaryBackgroundColor}">
+        <!--<Label Content="Home" Foreground="Black" FontSize="50" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="10,5,10,0" Height="30" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="1"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Name="AddData" Click="AddData_Click" Content="刷新"  Width="50"/>
+                <Button Grid.Column="2" Name="AddData1" Click="AddData1_Click" Content="清空" Width="50"/>
+            </Grid>
+
+            <DataGrid Grid.Row="2" x:Name="dataGrir1" AutoGenerateColumns="False"
+                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" ColumnHeaderHeight="30"
+                  CanUserSortColumns="True" CanUserResizeRows="False" CanUserResizeColumns="True" 
+                  FontSize="16" GridLinesVisibility="All" HeadersVisibility="Column" IsReadOnly="True" 
+                  RowHeight="28" ItemsSource="{Binding Source={StaticResource SortUserDB}}">
+                <!--<DataGrid.BorderBrush>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+            </DataGrid.BorderBrush>-->
+                <DataGrid.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="LightSkyBlue"/>
+                </DataGrid.Resources>
+                <DataGrid.Style>
+                    <Style TargetType="DataGrid">
+                        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"></Setter>
+                        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"></Setter>
+                        <Setter Property="HeadersVisibility" Value="Column"/>
+                        <Setter Property="HorizontalGridLinesBrush">
+                            <Setter.Value>
+                                <!--横线-->
+                                <SolidColorBrush Color="DarkGray"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="VerticalGridLinesBrush">
+                            <Setter.Value>
+                                <!--竖线-->
+                                <SolidColorBrush Color="DarkGray"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.Style>
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Style.Triggers>
+                            <Trigger Property="AlternationIndex" Value="0">
+                                <Setter Property="Background" Value="WhiteSmoke"/> <!--#FFD9EEED-->
+                            </Trigger>
+                            <Trigger Property="AlternationIndex" Value="1">
+                                <Setter Property="Background" Value="#FF84B3F9"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.ColumnHeaderStyle>
+                    <!--<Style TargetType="DataGridColumnHeader">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>-->
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                        <Setter Property="Background" Value="{DynamicResource PrimaryGrayColor}"/>
+                        <!--<Setter Property="Background" Value="#001f55"></Setter>-->
+                        <!--<Setter Property="Foreground" Value="#17acae"></Setter>-->
+                        <Setter Property="Foreground" Value="Black"></Setter>
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="BorderBrush" Value="DarkGray" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn MinWidth="45" Width="Auto" Binding="{Binding UserID}" Header="ID" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <DataGridTextColumn MinWidth="55" Width="Auto" Binding="{Binding ProductName}" Header="备件名" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <DataGridTextColumn MinWidth="55" Width="Auto" Binding="{Binding ProductLine}" Header="产线" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <DataGridTextColumn MinWidth="55" Width="Auto" Binding="{Binding Location}" Header="位置" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <DataGridTextColumn MinWidth="55" Width="Auto" Binding="{Binding Creater}" Header="创建者" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <DataGridTextColumn MinWidth="55" Width="Auto" Binding="{Binding Creater}" Header="创建时间" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <DataGridTextColumn MinWidth="55" Width="Auto" Binding="{Binding Creater}" Header="更新时间" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <DataGridTextColumn MinWidth="55" Width="Auto" Binding="{Binding RecordName}" Header="备案名称" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <DataGridTextColumn MinWidth="55" Width="Auto" Binding="{Binding Alarm_Stock}" Header="警戒/库存" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <DataGridTextColumn MinWidth="55" Width="Auto" Binding="{Binding PicPath}" Header="图片" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <DataGridTextColumn MinWidth="55" Width="Auto" Binding="{Binding Record}" Header="备案信息" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <DataGridTextColumn MinWidth="55" Width="Auto" Binding="{Binding Quotation}" Header="报价单" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <DataGridTextColumn MinWidth="55" Width="Auto" Binding="{Binding Comment}" Header="备注" ElementStyle="{StaticResource CenterAlignmentStyle}"/>
+                    <!--<DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="Height" Value="auto"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>-->
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
+    
+</Page>
